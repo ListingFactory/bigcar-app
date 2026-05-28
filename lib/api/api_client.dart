@@ -107,6 +107,32 @@ class ApiClient {
     return jsonDecode(utf8.decode(r.bodyBytes));
   }
 
+  // ===== 시세 =====
+  Future<List<dynamic>> priceIndex() async {
+    final r = await http.get(Uri.parse('$baseUrl/price'), headers: _headers);
+    final j = jsonDecode(utf8.decode(r.bodyBytes));
+    return (j['data'] as List?) ?? [];
+  }
+
+  Future<Map<String, dynamic>> priceCategory(String slug) async {
+    final r = await http.get(Uri.parse('$baseUrl/price/$slug'), headers: _headers);
+    return jsonDecode(utf8.decode(r.bodyBytes));
+  }
+
+  // ===== 정비소 =====
+  Future<List<dynamic>> serviceShops() async {
+    final r = await http.get(Uri.parse('$baseUrl/service-shops'), headers: _headers);
+    final j = jsonDecode(utf8.decode(r.bodyBytes));
+    return (j['data'] as List?) ?? [];
+  }
+
+  // ===== 매입요청 =====
+  Future<List<dynamic>> purchaseRequests() async {
+    final r = await http.get(Uri.parse('$baseUrl/purchase-requests'), headers: _headers);
+    final j = jsonDecode(utf8.decode(r.bodyBytes));
+    return (j['data'] as List?) ?? [];
+  }
+
   Future<bool> sendInquiry(String slug, {required String name, required String phone, String? email, required String message}) async {
     final r = await http.post(
       Uri.parse('$baseUrl/listings/$slug/inquiry'),

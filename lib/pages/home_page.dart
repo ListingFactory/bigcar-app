@@ -6,6 +6,10 @@ import '../theme/app_theme.dart';
 import '../widgets/listing_card.dart';
 import 'listing_detail_page.dart';
 import 'listings_page.dart';
+import 'categories_page.dart';
+import 'price_page.dart';
+import 'service_shops_page.dart';
+import 'purchase_requests_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -124,6 +128,22 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
 
+                  // 서비스 진입 카드 3개
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+                      child: Row(
+                        children: [
+                          _serviceTile('💰', '시세', Colors.cyan, () => Navigator.push(context, MaterialPageRoute(builder: (_) => const PricePage()))),
+                          const SizedBox(width: 8),
+                          _serviceTile('🔧', '정비소', AppColors.emerald, () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ServiceShopsPage()))),
+                          const SizedBox(width: 8),
+                          _serviceTile('📋', '매입요청', Colors.purple, () => Navigator.push(context, MaterialPageRoute(builder: (_) => const PurchaseRequestsPage()))),
+                        ],
+                      ),
+                    ),
+                  ),
+
                   // 카테고리 가로 스크롤
                   SliverToBoxAdapter(
                     child: Padding(
@@ -133,7 +153,7 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           const Text('카테고리', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900)),
                           TextButton(
-                            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ListingsPage())),
+                            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const CategoriesPage())),
                             child: const Text('전체보기 →', style: TextStyle(color: AppColors.cyanDark, fontWeight: FontWeight.w700)),
                           ),
                         ],
@@ -210,6 +230,26 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
+  Widget _serviceTile(String emoji, String label, Color color, VoidCallback onTap) => Expanded(
+    child: InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(14),
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 8),
+        decoration: BoxDecoration(
+          color: color.withValues(alpha: 0.08),
+          border: Border.all(color: color.withValues(alpha: 0.2)),
+          borderRadius: BorderRadius.circular(14),
+        ),
+        child: Column(children: [
+          Text(emoji, style: const TextStyle(fontSize: 22)),
+          const SizedBox(height: 4),
+          Text(label, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w800, color: color)),
+        ]),
+      ),
+    ),
+  );
 
   Widget _section(String title, List<Listing> items) {
     return SliverToBoxAdapter(

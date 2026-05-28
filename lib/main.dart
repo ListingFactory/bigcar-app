@@ -5,6 +5,7 @@ import 'theme/app_theme.dart';
 import 'pages/home_page.dart';
 import 'pages/listings_page.dart';
 import 'pages/mypage_page.dart';
+import 'pages/favorites_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -41,7 +42,7 @@ class _RootShellState extends State<RootShell> {
   final pages = const [
     HomePage(),
     ListingsPage(),
-    _FavoritesTab(),
+    FavoritesPage(),
     MyPagePage(),
   ];
 
@@ -63,24 +64,3 @@ class _RootShellState extends State<RootShell> {
   }
 }
 
-class _FavoritesTab extends StatelessWidget {
-  const _FavoritesTab();
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('찜한 매물')),
-      body: const Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.favorite_border, size: 64, color: AppColors.ink400),
-            SizedBox(height: 12),
-            Text('찜한 매물', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900)),
-            SizedBox(height: 4),
-            Text('매물 카드의 하트를 눌러 찜해보세요', style: TextStyle(color: AppColors.ink400, fontSize: 13)),
-          ],
-        ),
-      ),
-    );
-  }
-}

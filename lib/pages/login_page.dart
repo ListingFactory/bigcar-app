@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../api/api_client.dart';
 import '../theme/app_theme.dart';
+import 'register_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -100,6 +101,23 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               const SizedBox(height: 16),
+              Center(
+                child: TextButton(
+                  onPressed: () async {
+                    final ok = await Navigator.push<bool>(context, MaterialPageRoute(builder: (_) => const RegisterPage()));
+                    if (ok == true && mounted) Navigator.pop(context, true);
+                  },
+                  child: const Text.rich(
+                    TextSpan(
+                      children: [
+                        TextSpan(text: '아직 회원이 아니신가요? ', style: TextStyle(color: Colors.white70, fontSize: 13)),
+                        TextSpan(text: '회원가입', style: TextStyle(color: AppColors.cyan, fontSize: 13, fontWeight: FontWeight.w700)),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 4),
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(color: Colors.white.withValues(alpha: 0.05), borderRadius: BorderRadius.circular(8)),
