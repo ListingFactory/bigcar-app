@@ -30,10 +30,15 @@ class _PricePageState extends State<PricePage> {
     return Scaffold(
       backgroundColor: AppColors.ink50,
       appBar: AppBar(
-        backgroundColor: AppColors.ink,
-        foregroundColor: Colors.white,
-        title: const Text('시세 분석', style: TextStyle(color: Colors.white)),
+        backgroundColor: Colors.white,
+        foregroundColor: AppColors.ink,
         elevation: 0,
+        scrolledUnderElevation: 0,
+        title: const Text('시세 분석', style: TextStyle(fontWeight: FontWeight.w900)),
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(1),
+          child: Container(height: 1, color: AppColors.ink100),
+        ),
       ),
       body: loading
           ? const Center(child: CircularProgressIndicator(color: AppColors.cyanDark))
@@ -41,29 +46,31 @@ class _PricePageState extends State<PricePage> {
               children: [
                 Container(
                   width: double.infinity,
-                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [AppColors.ink, Color(0xFF164E63), AppColors.ink]),
-                  ),
+                  color: Colors.white,
+                  padding: const EdgeInsets.fromLTRB(20, 4, 20, 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                         decoration: BoxDecoration(
-                          color: AppColors.cyan.withValues(alpha: 0.15),
-                          border: Border.all(color: AppColors.cyan.withValues(alpha: 0.4)),
+                          color: AppColors.cyan.withValues(alpha: 0.1),
+                          border: Border.all(color: AppColors.cyan.withValues(alpha: 0.3)),
                           borderRadius: BorderRadius.circular(20),
                         ),
-                        child: const Text('실거래 기반 분석', style: TextStyle(color: AppColors.cyan, fontSize: 11)),
+                        child: const Text('실거래 기반 분석', style: TextStyle(color: AppColors.cyanDarker, fontSize: 11, fontWeight: FontWeight.w600)),
                       ),
                       const SizedBox(height: 10),
-                      const Text('중장비 시세 인사이트', style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w900)),
-                      const SizedBox(height: 6),
-                      Text('${summaries.length}개 카테고리 · 실시간 가격 분석', style: TextStyle(color: Colors.white.withValues(alpha: 0.7), fontSize: 12)),
+                      Row(children: const [
+                        Text('중장비 ', style: TextStyle(color: AppColors.ink, fontSize: 22, fontWeight: FontWeight.w900)),
+                        Text('시세 인사이트', style: TextStyle(color: AppColors.cyanDark, fontSize: 22, fontWeight: FontWeight.w900)),
+                      ]),
+                      const SizedBox(height: 4),
+                      Text('${summaries.length}개 카테고리 · 실시간 가격 분석', style: const TextStyle(color: AppColors.ink600, fontSize: 12)),
                     ],
                   ),
                 ),
+                Container(height: 1, color: AppColors.ink100),
                 Expanded(
                   child: ListView.builder(
                     padding: const EdgeInsets.all(12),
@@ -71,8 +78,9 @@ class _PricePageState extends State<PricePage> {
                     itemBuilder: (_, i) {
                       final s = summaries[i] as Map<String, dynamic>;
                       final cat = s['category'] as Map<String, dynamic>;
-                      return Card(
+                      return Container(
                         margin: const EdgeInsets.only(bottom: 8),
+                        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(14), border: Border.all(color: AppColors.ink100)),
                         child: Padding(
                           padding: const EdgeInsets.all(14),
                           child: Column(
